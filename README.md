@@ -21,6 +21,7 @@ require("zone").setup()
 require('zone').setup {
     style = "treadmill",
     after = 10,          -- Idle timeout
+    -- More options to come later
 
     treadmill = {
         direction = "left",
@@ -32,16 +33,24 @@ require('zone').setup {
     -- etc
 }
 ```
-</details> <br />
+</details>
 
 #### Showcase:
 
 > Treadmill
 
+![zone_treadmill](https://user-images.githubusercontent.com/77913442/166483843-970fb4b3-51cd-499c-9f39-da67d940eeb1.gif)
+
 > Dvd
+
+![zone_dvd](https://user-images.githubusercontent.com/77913442/166483923-94488f6a-5a11-4d01-8ff2-a9b2df929964.gif)
 
 > Vanish
 
+![zone_vanish](https://user-images.githubusercontent.com/77913442/166484010-62037c22-983e-473d-b66c-d5ccf563102f.gif)
+
+#### Note:
+> ❗ This plugin wont eat the current buffer. It just emulates the content as a cover on top.
 
 ### Todo:
 - [ ] Add user config options.

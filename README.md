@@ -20,7 +20,7 @@ require("zone").setup()
 ```lua
 require('zone').setup {
     style = "treadmill",
-    after = 10,          -- Idle timeout
+    after = 30,          -- Idle timeout
     -- More options to come later
 
     treadmill = {

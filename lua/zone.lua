@@ -3,7 +3,7 @@ local timer
 
 local default_opts = {
     style = "treadmill",
-    after = 10,
+    after = 30,
     tick_time = 0.1, -- todo: make it configurable inside helper.lua
     treadmill = {
         direction = "left" -- a lil buggy for `right`

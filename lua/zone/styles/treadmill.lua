@@ -1,3 +1,4 @@
+-- TODO: fix the spacing stuff
 local treadmill = {}
 local mod = require("zone.helper")
 local fake_buf
@@ -6,6 +7,7 @@ local opts_table
 local line_spaces
 
 local rotate = function()
+    if not vim.api.nvim_buf_is_valid(fake_buf) then return end
 	local lines = vim.api.nvim_buf_get_lines(fake_buf, 0, -1, true)
 	local new_lines = {}
 	for i, line in ipairs(lines) do
@@ -40,7 +42,7 @@ function treadmill.start(opts)
         table.insert(line_spaces, this_line)
     end
 
-    mod.on_each_tick(rotate)
+    mod.on_each_tick(vim.schedule_wrap(rotate))
 end
 
 return treadmill

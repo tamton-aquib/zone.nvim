@@ -16,8 +16,8 @@ Internal.zone_close = function()
         vim.schedule(function()
             vim.api.nvim_win_close(zone_win, true)
             vim.api.nvim_buf_delete(zone_buf, {force=true})
-            timer:stop()
-            timer:close()
+            if timer:is_active() then timer:stop() end
+            if not timer:is_closing() then timer:close() end
             if type(Internal.on_exit) == "function" then Internal.on_exit() end
             is_running = false
         end)

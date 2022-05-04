@@ -26,7 +26,6 @@ local check_touch_side = function(row, col)
     if not vim.deep_equal(old, direction) then
         local stuff = {'TSFuncBuiltin', 'TSKeyword', 'TSType', 'TSFunction'}
         hl = stuff[math.random(4)]
-        -- print(vim.inspect(math.random(4)))
     end
 end
 local get_rand = function()

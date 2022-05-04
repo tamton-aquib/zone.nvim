@@ -23,7 +23,7 @@ local rotate = function()
 		table.insert(new_lines, new_line)
 	end
 
-    vim.schedule_wrap(function()
+    vim.schedule(function()
         vim.api.nvim_buf_set_lines(fake_buf, 0, -1, true, new_lines)
     end)
 end

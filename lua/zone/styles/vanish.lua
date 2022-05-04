@@ -14,7 +14,7 @@ local do_stuff = function(lines)
             local new_line = table.concat(letters, '')
             lines[random_line_idx] = new_line
             if vim.api.nvim_buf_is_valid(buf_dup) then
-                vim.schedule_wrap(function()
+                vim.schedule(function()
                     vim.api.nvim_buf_set_lines(buf_dup, random_line_idx-1, random_line_idx, true, {new_line})
                 end)
             end

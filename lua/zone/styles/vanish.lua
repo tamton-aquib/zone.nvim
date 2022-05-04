@@ -13,17 +13,17 @@ local do_stuff = function(lines)
             letters[random_letter_idx] = " "
             local new_line = table.concat(letters, '')
             lines[random_line_idx] = new_line
-            -- TODO: for efficiency, just change the single line
-            -- vim.api.nvim_buf_set_lines(buf_dup, 0, -1, true, lines)
             if vim.api.nvim_buf_is_valid(buf_dup) then
-                vim.api.nvim_buf_set_lines(buf_dup, random_line_idx-1, random_line_idx, true, {new_line})
+                vim.schedule_wrap(function()
+                    vim.api.nvim_buf_set_lines(buf_dup, random_line_idx-1, random_line_idx, true, {new_line})
+                end)
             end
         end
     end
 end
 
 function vanish.start()
-    mod.opts = {tick_time=10}
+    mod.opts = {tick_time=70}
     local buf_og = vim.api.nvim_get_current_buf()
     math.randomseed(os.clock())
 

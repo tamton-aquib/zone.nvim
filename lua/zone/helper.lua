@@ -14,8 +14,12 @@ local helper_opts = {
 Internal.zone_close = function()
 	if is_running then
         vim.schedule(function()
-            vim.api.nvim_win_close(zone_win, true)
-            vim.api.nvim_buf_delete(zone_buf, {force=true})
+            if vim.api.nvim_win_is_valid(zone_win) then
+                vim.api.nvim_win_close(zone_win, true)
+            end
+            if vim.api.nvim_buf_is_valid(zone_buf) then
+                vim.api.nvim_buf_delete(zone_buf, {force=true})
+            end
             if timer:is_active() then timer:stop() end
             if not timer:is_closing() then timer:close() end
             if type(Internal.on_exit) == "function" then Internal.on_exit() end
@@ -51,7 +55,6 @@ Internal.create_and_initiate = function(on_init)
         vim.api.nvim_win_set_cursor(zone_win, pos_after)
     end)
 
-	-- vim.api.nvim_buf_set_lines(zone_buf, 0, -1, true, local_content)
 	vim.api.nvim_buf_set_option(zone_buf, 'filetype', ft)
     vim.api.nvim_win_set_option(zone_win, 'winhl', 'Normal:Normal')
     -- TODO: add this keymap stuff later without breaking anything

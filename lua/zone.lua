@@ -21,15 +21,16 @@ zone.setup = function(opts)
         callback=function()
             timer = vim.loop.new_timer()
             timer:start(opts.after * 1000, 0, vim.schedule_wrap(function()
-                if timer:is_active() then timer:stop() end
-                if not timer:is_closing() then timer:close() end
+                timer:stop()
+                timer:close()
                 require("zone.styles."..(opts.style or "treadmill")).start(opts[opts.style])
             end))
             vim.api.nvim_create_autocmd({'CursorMoved', 'CursorMovedI'}, {
                 group=grp,
                 pattern = "*",
                 callback = function()
-                    if timer then timer:stop() end
+                    if timer:is_active() then timer:stop() end
+                    if not timer:is_closing() then timer:close() end
                 end,
                 once=true
             })

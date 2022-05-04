@@ -53,6 +53,7 @@ Internal.create_and_initiate = function(on_init)
 
 	-- vim.api.nvim_buf_set_lines(zone_buf, 0, -1, true, local_content)
 	vim.api.nvim_buf_set_option(zone_buf, 'filetype', ft)
+    vim.api.nvim_win_set_option(zone_win, 'winhl', 'Normal:Normal')
     -- TODO: add this keymap stuff later without breaking anything
     -- vim.keymap.set('n', '<Esc>', function() Internal.zone_close() end, {noremap=true, buffer=zone_buf})
 

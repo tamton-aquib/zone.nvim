@@ -30,21 +30,19 @@ end
 
 function treadmill.start(opts)
     opts_table = opts
-    fake_buf = mod.create_and_initiate(nil)
     local before_buf = vim.api.nvim_get_current_buf()
-    local start_line = vim.fn.line("w0") - 1
-    local end_line = start_line + vim.o.lines
 
-    local local_content = vim.api.nvim_buf_get_lines(before_buf, start_line, end_line, false)
-    vim.api.nvim_buf_set_lines(fake_buf, 0, -1, true, local_content)
+    fake_buf = mod.create_and_initiate(nil)
+
+    local zone_lines = mod.set_buf_view(before_buf)
 
     line_spaces = {}
-    for _,line in ipairs(vim.api.nvim_buf_get_lines(fake_buf, 0, -1, true)) do
+    for _,line in ipairs(zone_lines) do
         local this_line = line:match("^(%s*)") or ""
         table.insert(line_spaces, this_line)
     end
 
-    mod.on_each_tick(vim.schedule_wrap(rotate))
+    mod.on_each_tick(rotate)
 end
 
 return treadmill

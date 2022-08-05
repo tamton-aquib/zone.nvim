@@ -1,6 +1,6 @@
 local vanish = {}
 local mod = require("zone.helper")
-local buf_dup
+local fake_buf
 
 local do_stuff = function(lines)
     local random_line_idx = math.random(#lines)
@@ -13,9 +13,9 @@ local do_stuff = function(lines)
             letters[random_letter_idx] = " "
             local new_line = table.concat(letters, '')
             lines[random_line_idx] = new_line
-            if vim.api.nvim_buf_is_valid(buf_dup) then
+            if vim.api.nvim_buf_is_valid(fake_buf) then
                 vim.schedule(function()
-                    vim.api.nvim_buf_set_lines(buf_dup, random_line_idx-1, random_line_idx, true, {new_line})
+                    vim.api.nvim_buf_set_lines(fake_buf, random_line_idx-1, random_line_idx, true, {new_line})
                 end)
             end
         end
@@ -24,15 +24,11 @@ end
 
 function vanish.start()
     mod.opts = {tick_time=70}
-    local buf_og = vim.api.nvim_get_current_buf()
     math.randomseed(os.clock())
 
-    local start_line = vim.fn.line("w0") - 1
-    local end_line = start_line + vim.o.lines
-
-    local lines = vim.api.nvim_buf_get_lines(buf_og, start_line, end_line, false)
-    buf_dup = mod.create_and_initiate(nil)
-    vim.api.nvim_buf_set_lines(buf_dup, 0, -1, false, lines)
+    local before_buf = vim.api.nvim_get_current_buf()
+    fake_buf = mod.create_and_initiate(nil)
+    local lines = mod.set_buf_view(before_buf)
 
     mod.on_each_tick(function()
         do_stuff(lines)

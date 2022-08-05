@@ -64,5 +64,7 @@ require('zone').setup {
     - [ ] Trembling effect: `earthquake`
     - [x] Vanishing letters: `vanish`
     - [ ] Switching cases: `burn`
+    - [ ] Matrix effect: `matrix`
+    - [ ] Changing highlights: `epilepsy`
     - [ ] Random style: `random`
 - [ ] Write some docs for creating custom styles.

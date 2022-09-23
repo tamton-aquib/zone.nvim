@@ -27,6 +27,10 @@ require('zone').setup {
         direction = "left",
         -- Opts for Treadmill style
     },
+    epilepsy = {
+        stage = "aura", -- "aura" or "ictal"
+        -- etc.
+    },
     dvd = {
         -- Opts for Dvd style
     },
@@ -44,6 +48,10 @@ require('zone').setup {
 > Dvd
 
 ![zone_dvd](https://user-images.githubusercontent.com/77913442/166483923-94488f6a-5a11-4d01-8ff2-a9b2df929964.gif)
+
+> Epilepsy
+
+![zone_epilepsy](https://user-images.githubusercontent.com/77913442/192028416-7406d801-ad8b-4c39-9df1-96ee3e65fad0.gif)
 
 > Vanish
 
@@ -64,7 +72,7 @@ require('zone').setup {
     - [ ] Trembling effect: `earthquake`
     - [x] Vanishing letters: `vanish`
     - [ ] Switching cases: `burn`
+    - [x] Changing highlights: `epilepsy`
     - [ ] Matrix effect: `matrix`
-    - [ ] Changing highlights: `epilepsy`
     - [ ] Random style: `random`
 - [ ] Write some docs for creating custom styles.

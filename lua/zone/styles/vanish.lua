@@ -3,6 +3,7 @@ local mod = require("zone.helper")
 local fake_buf
 
 local do_stuff = function(lines)
+    if not vim.api.nvim_buf_is_valid(fake_buf) then return end
     local random_line_idx = math.random(#lines)
     local random_line = lines[random_line_idx]
 

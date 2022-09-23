@@ -7,8 +7,9 @@ local default_opts = {
     tick_time = 0.1, -- todo: make it configurable inside helper.lua
     treadmill = {
         direction = "left" -- a lil buggy for `right`
-    }
-    -- TODO: Config options for other styles
+    },
+    -- TODO: Config options for other styles and exclude filetypes
+    -- exclude_ft = {}
 }
 
 zone.setup = function(opts)
@@ -17,7 +18,6 @@ zone.setup = function(opts)
     local grp = vim.api.nvim_create_augroup('Zone', {clear=true})
     vim.api.nvim_create_autocmd({'CursorHold', 'CursorHoldI'}, {
         group = grp,
-        pattern="*",
         callback=function()
             timer = vim.loop.new_timer()
             timer:start(opts.after * 1000, 0, vim.schedule_wrap(function()
@@ -27,7 +27,6 @@ zone.setup = function(opts)
             end))
             vim.api.nvim_create_autocmd({'CursorMoved', 'CursorMovedI'}, {
                 group=grp,
-                pattern = "*",
                 callback = function()
                     if timer:is_active() then timer:stop() end
                     if not timer:is_closing() then timer:close() end

@@ -65,6 +65,8 @@ require('zone').setup {
 - [ ] Better core helper functions.
 - [ ] Performance improvements.
 - [ ] Remove logical bugs (especially with other modes)
+- [ ] Take signcolumn into account.
+- [ ] Move everything from getline-setline to extmarks.
 - [ ] Add styles:
     - [x] Running text: `treadmill`
     - [x] Classic DVD screensaver: `dvd`

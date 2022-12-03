@@ -17,8 +17,9 @@ zone.setup = function(opts)
 
     local grp = vim.api.nvim_create_augroup('Zone', {clear=true})
     vim.api.nvim_create_autocmd({'CursorHold', 'CursorHoldI'}, {
-        group = grp,
+        group=grp,
         callback=function()
+            -- TODO: Will vim.defer_fn suffice here?
             timer = vim.loop.new_timer()
             timer:start(opts.after * 1000, 0, vim.schedule_wrap(function()
                 if timer:is_active() then timer:stop() end

@@ -7,7 +7,7 @@ local helper_opts = {
     tick_time = 100,
     win_opts = {
 		relative="win", width=vim.o.columns, height=vim.o.lines - 2,
-		border="none", row=3, col=0, -- style='minimal'
+		border="none", row=0, col=0
     }
 }
 

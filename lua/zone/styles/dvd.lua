@@ -47,9 +47,11 @@ function dvd.start()
     end)
 
     mod.on_exit = function()
-        vim.api.nvim_win_close(win, true)
+        -- vim.api.nvim_win_close(win, true)
+        pcall(vim.api.nvim_win_close, win, true)
         vim.api.nvim_buf_delete(buf, {force=true})
     end
+
     mod.on_each_tick(function()
         if not vim.api.nvim_win_is_valid(win) then return end
         local config = vim.api.nvim_win_get_config(win)
@@ -69,8 +71,6 @@ function dvd.start()
         elseif vim.deep_equal(direction, {"l", "u"}) then
             config["row"] = row - 1
             config["col"] = col - 1
-        else
-            print(vim.inspect(direction))
         end
 
         vim.api.nvim_win_set_option(win, 'winhl', 'Normal:'..hl)

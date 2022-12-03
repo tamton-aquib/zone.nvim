@@ -25,14 +25,11 @@ H.set_buf_view = function(og_buf)
 end
 
 H.zone_close = function()
+    vim.pretty_print("Called close")
 	if is_running then
         vim.schedule(function()
-            if vim.api.nvim_win_is_valid(zone_win) then
-                vim.api.nvim_win_close(zone_win, true)
-            end
-            if vim.api.nvim_buf_is_valid(zone_buf) then
-                vim.api.nvim_buf_delete(zone_buf, {force=true})
-            end
+            pcall(vim.api.nvim_win_close, zone_win, true)
+            pcall(vim.api.nvim_buf_delete, zone_buf, {force=true})
             if timer:is_active() then timer:stop() end
             if not timer:is_closing() then timer:close() end
             if type(H.on_exit) == "function" then H.on_exit() end
@@ -46,7 +43,7 @@ end
 ---@return number timer
 H.on_each_tick = function(cb)
 	timer = uv.new_timer()
-	uv.timer_start(timer, 1000, helper_opts.tick_time or 100, vim.schedule_wrap(cb))
+	timer:start(1000, helper_opts.tick_time or 100, vim.schedule_wrap(cb))
 
     return timer
 end
@@ -75,11 +72,11 @@ H.create_and_initiate = function(on_init)
 	vim.api.nvim_buf_set_option(zone_buf, 'filetype', ft)
     vim.api.nvim_win_set_option(zone_win, 'winhl', 'Normal:Normal')
     -- TODO: add this keymap stuff later without breaking anything
-    -- vim.keymap.set('n', '<Esc>', function() Internal.zone_close() end, {noremap=true, buffer=zone_buf})
+    -- FIX: doesnt work idk why. tried schedule and stuff.
+    -- vim.keymap.set('n', '<Esc>', H.zone_close, {buffer=zone_buf})
 
     vim.api.nvim_create_autocmd('CursorMoved', {
-        pattern="*",
-        callback=function() H.zone_close() end,
+        callback=H.zone_close,
         once=true
     })
 

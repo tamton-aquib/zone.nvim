@@ -4,14 +4,14 @@ local mod = require("zone.helper")
 local fake_buf
 local local_opts
 
-local do_stuff = function(grid, ns, id)
-    local rand_row = math.random(#grid)
-    local rand_col = math.random(#grid[rand_row])
+local do_stuff = function(matrix, ns, id)
+    local rand_row = math.random(#matrix)
+    local rand_col = math.random(#matrix[rand_row])
 
-    if grid[rand_row][rand_col][1] ~= "" then
-        grid[rand_row][rand_col] = {' ', '@none'}
+    if matrix[rand_row][rand_col][1] ~= "" then
+        matrix[rand_row][rand_col] = {' ', '@none'}
     end
-    vim.api.nvim_buf_set_extmark(fake_buf, ns, 0, 0, { virt_lines=grid, id=id })
+    vim.api.nvim_buf_set_extmark(fake_buf, ns, 0, 0, { virt_lines=matrix, id=id })
 end
 
 function vanish.start(opts)
@@ -20,9 +20,9 @@ function vanish.start(opts)
 
     local before_buf = vim.api.nvim_get_current_buf()
     fake_buf = mod.create_and_initiate(nil, local_opts)
-    local grid, ns, id = mod.set_buf_view(before_buf)
+    local matrix, ns, id = mod.set_buf_view(before_buf)
 
-    mod.on_each_tick(function() do_stuff(grid, ns, id) end)
+    mod.on_each_tick(function() do_stuff(matrix, ns, id) end)
 end
 
 return vanish

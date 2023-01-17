@@ -21,6 +21,7 @@ require("zone").setup()
 require('zone').setup {
     style = "treadmill",
     after = 30,          -- Idle timeout
+    exclude_filetypes = { "TelescopePrompt" },
     -- More options to come later
 
     treadmill = {

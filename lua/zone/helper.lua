@@ -6,7 +6,7 @@ local zone_win, zone_buf
 local uv = vim.loop
 local w = 6
 local helper_opts = {
-    tick_time = 75,
+    tick_time = 100,
     win_opts = {
 		relative="win", width=vim.o.columns-w, height=vim.o.lines - 2,
 		border="none", row=0, col=w, style='minimal'
@@ -19,6 +19,7 @@ H.set_buf_view = function(og_buf)
 
     local local_content = vim.api.nvim_buf_get_lines(og_buf, start_line, end_line, false)
 
+    -- TODO: Feels like we can optimize stuff here
     local matrix = {}
     for i=0, #local_content-1 do
         local newt = {}
@@ -45,8 +46,10 @@ end
 H.zone_close = function()
 	if is_running then
         vim.schedule(function()
+            if id then
+                vim.api.nvim_buf_del_extmark(zone_buf, ns, id)
+            end
             pcall(vim.api.nvim_win_close, zone_win, true)
-            vim.api.nvim_buf_del_extmark(zone_buf, ns, id)
             pcall(vim.api.nvim_buf_delete, zone_buf, {force=true})
 
             if timer:is_active() then timer:stop() end

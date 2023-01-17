@@ -43,6 +43,7 @@ function dvd.start()
             relative="editor", style='minimal', height=text_h, width=text_w,
             row=r, col=c
         })
+        vim.api.nvim_win_set_option(win, 'winhl', 'Normal:Normal')
         vim.api.nvim_buf_set_lines(buf, 0, #lines, false, lines)
     end)
 

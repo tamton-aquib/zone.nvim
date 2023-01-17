@@ -19,8 +19,8 @@ H.create_and_initiate = function(on_init, opts)
     -- TODO: pass bufnr into on_init maybe
     if type(on_init) == "function" then on_init() end
 
-	zone_buf = vim.api.nvim_create_buf(false, true)
-	zone_win = vim.api.nvim_open_win(zone_buf, false, helper_opts.win_opts)
+    zone_buf = vim.api.nvim_create_buf(false, true)
+    zone_win = vim.api.nvim_open_win(zone_buf, false, helper_opts.win_opts)
     is_running = true
 
     vim.api.nvim_win_set_option(zone_win, 'winhl', 'Normal:Normal')
@@ -60,8 +60,8 @@ H.set_buf_view = function(og_buf)
 end
 
 H.on_each_tick = function(callback)
-	timer = uv.new_timer()
-	timer:start(1000, helper_opts.tick_time or 100, vim.schedule_wrap(
+    timer = uv.new_timer()
+    timer:start(1000, helper_opts.tick_time or 100, vim.schedule_wrap(
         function()
             if not vim.api.nvim_buf_is_valid(zone_buf) then
                 vim.pretty_print("Buf does not exist")
@@ -77,7 +77,7 @@ H.on_each_tick = function(callback)
 end
 
 H.zone_close = function()
-	if is_running then
+    if is_running then
         vim.schedule(function()
             if id then
                 vim.api.nvim_buf_del_extmark(zone_buf, ns, id)
@@ -92,7 +92,7 @@ H.zone_close = function()
             if type(H.on_exit) == "function" then H.on_exit() end
             is_running = false
         end)
-	end
+    end
 end
 
 return H

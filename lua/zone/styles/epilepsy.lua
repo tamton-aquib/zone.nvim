@@ -13,7 +13,7 @@ local map = {
 }
 
 local do_stuff = function(grid, ns, id)
-    local opts = {stage="ictal"}
+    local opts = {stage="aura"}
     for row=0, #grid-1 do
         local line = grid[row+1]
 
@@ -53,13 +53,7 @@ epilepsy.start = function(opts)
         vim.cmd("hi Epilepsy"..i.." guifg="..color.." guibg=none")
     end
 
-    mod.on_each_tick(function()
-        if not vim.api.nvim_buf_is_valid(fake_buf) then
-            vim.pretty_print("Buf not present!")
-            return
-        end
-        do_stuff(grid, ns, id)
-    end)
+    mod.on_each_tick(function() do_stuff(grid, ns, id) end)
 end
 
 return epilepsy

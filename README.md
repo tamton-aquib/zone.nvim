@@ -61,18 +61,4 @@ require('zone').setup {
 > ❗ This plugin wont eat the current buffer. It just emulates the content as a cover on top.
 
 ### Todo:
-- [ ] Add user config options.
-- [ ] Better core helper functions.
-- [ ] Performance improvements.
-- [ ] Remove logical bugs (especially with other modes)
-- [ ] Add styles:
-    - [x] Running text: `treadmill`
-    - [x] Classic DVD screensaver: `dvd`
-    - [ ] Falling letters: `fall`
-    - [ ] Trembling effect: `earthquake`
-    - [x] Vanishing letters: `vanish`
-    - [ ] Switching cases: `burn`
-    - [x] Changing highlights: `epilepsy`
-    - [ ] Matrix effect: `matrix`
-    - [ ] Random style: `random`
-- [ ] Write some docs for creating custom styles.
+Moved to [todo.norg](https://github.com/tamton-aquib/zone.nvim/blob/main/todo.norg)

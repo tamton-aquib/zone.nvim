@@ -1,6 +1,7 @@
 local dvd = {}
 local mod = require("zone.helper")
 local win, buf
+local local_opts
 -- TODO: change these to config options
 local lines = vim.split([[
 ⠀⠀⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⢀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣶⣦⡀
@@ -35,7 +36,8 @@ local get_rand = function()
     return r, c
 end
 
-function dvd.start()
+function dvd.start(opts)
+    local_opts = opts or {tick_time=100}
     local r, c = get_rand()
     mod.create_and_initiate(function()
         buf = vim.api.nvim_create_buf(false, true)
@@ -45,12 +47,13 @@ function dvd.start()
         })
         vim.api.nvim_win_set_option(win, 'winhl', 'Normal:Normal')
         vim.api.nvim_buf_set_lines(buf, 0, #lines, false, lines)
-    end)
+    end, local_opts)
 
     mod.on_exit = function()
         vim.api.nvim_win_close(win, true)
         vim.api.nvim_buf_delete(buf, {force=true})
     end
+
     mod.on_each_tick(function()
         if not vim.api.nvim_win_is_valid(win) then return end
         local config = vim.api.nvim_win_get_config(win)
@@ -71,7 +74,7 @@ function dvd.start()
             config["row"] = row - 1
             config["col"] = col - 1
         else
-            print(vim.inspect(direction))
+            vim.pretty_print("[zone.nvim] Invalid direction: ", direction)
         end
 
         vim.api.nvim_win_set_option(win, 'winhl', 'Normal:'..hl)

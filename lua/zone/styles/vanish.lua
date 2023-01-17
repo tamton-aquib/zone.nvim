@@ -2,6 +2,7 @@
 local vanish = {}
 local mod = require("zone.helper")
 local fake_buf
+local local_opts
 
 local do_stuff = function(grid, ns, id)
     if not vim.api.nvim_buf_is_valid(fake_buf) then
@@ -18,11 +19,12 @@ local do_stuff = function(grid, ns, id)
     })
 end
 
-function vanish.start()
+function vanish.start(opts)
+    local_opts = opts or {tick_time=50}
     math.randomseed(os.clock())
 
     local before_buf = vim.api.nvim_get_current_buf()
-    fake_buf = mod.create_and_initiate(nil, {tick_time=50})
+    fake_buf = mod.create_and_initiate(nil, local_opts)
     local grid, ns, id = mod.set_buf_view(before_buf)
 
     mod.on_each_tick(function()

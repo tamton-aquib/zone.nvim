@@ -5,7 +5,10 @@ local fake_buf
 local local_opts = {headache=false, tick_time=50}
 
 local rotate = function(grid, ns, id)
-    if not vim.api.nvim_buf_is_valid(fake_buf) then return end
+    if not vim.api.nvim_buf_is_valid(fake_buf) then
+        vim.pretty_print("Buf does not exist")
+        return
+    end
 
     for i=0, #grid-1 do
         local item = table.remove(grid[i+1], 1)

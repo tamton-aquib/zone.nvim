@@ -8,8 +8,8 @@ local w = 6
 local helper_opts = {
     tick_time = 100,
     win_opts = {
-		relative="win", width=vim.o.columns-w, height=vim.o.lines - 2,
-		border="none", row=0, col=w, style='minimal'
+        relative="win", width=vim.o.columns-w, height=vim.o.lines - 2,
+        border="none", row=0, col=w, style='minimal'
     }
 }
 

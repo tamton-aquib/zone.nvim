@@ -86,8 +86,10 @@ H.zone_close = function()
             pcall(vim.api.nvim_win_close, zone_win, true)
             pcall(vim.api.nvim_buf_delete, zone_buf, {force=true})
 
-            if timer:is_active() then timer:stop() end
-            if not timer:is_closing() then timer:close() end
+            if timer then
+                if timer:is_active() then timer:stop() end
+                if not timer:is_closing() then timer:close() end
+            end
 
             if type(H.on_exit) == "function" then H.on_exit() end
             is_running = false

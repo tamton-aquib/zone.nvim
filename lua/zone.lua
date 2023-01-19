@@ -5,7 +5,7 @@ local default_opts = require("zone.config")
 
 zone.setup = function(opts)
     opts = vim.tbl_deep_extend("force", default_opts, opts or {})
-    for _, style in ipairs({"treadmill", "dvd", "epilepsy", "vanish"}) do
+    for _, style in ipairs({"treadmill", "dvd", "epilepsy", "vanish", "matrix"}) do
         require("zone.styles."..style).setup(opts[style])
     end
 

@@ -11,6 +11,10 @@ local default_opts = {
         headache = false
     },
 
+    matrix = {
+        tick_time = 1000,
+    },
+
     dvd = {
         text = vim.split([[
         ⠀⠀⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⢀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣶⣦⡀

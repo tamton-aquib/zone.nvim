@@ -13,6 +13,10 @@ local helper_opts = {
     }
 }
 
+--- Initiate the fake buffer and floating windows.
+---@param on_init function? The function that runs before creation of the fake buf/win
+---@param opts table Local options for the style
+---@return number zone buffer id
 H.create_and_initiate = function(on_init, opts)
     helper_opts = vim.tbl_deep_extend("force", helper_opts, opts or {})
 
@@ -32,6 +36,11 @@ H.create_and_initiate = function(on_init, opts)
     return zone_buf
 end
 
+--- Setting the default view of the previous/specified buffer as virtual text.
+---@param og_buf number The previous/specified buffer.
+---@return table
+---@return number
+---@return number
 H.set_buf_view = function(og_buf)
     local start_line = vim.fn.line("w0")
     local end_line = start_line + vim.o.lines
@@ -59,6 +68,9 @@ H.set_buf_view = function(og_buf)
     return matrix, ns, id
 end
 
+--- Calls the callback function on regular intervals (interval: opts.tick_time)
+---@param callback function The function that is being called on each tick.
+---@return number Timer object
 H.on_each_tick = function(callback)
     timer = uv.new_timer()
     timer:start(1000, helper_opts.tick_time or 100, vim.schedule_wrap(
@@ -76,6 +88,7 @@ H.on_each_tick = function(callback)
     return timer
 end
 
+--- Close the zone buffer + floating windows and clears necessary resources like timers and extmark ids.
 H.zone_close = function()
     if is_running then
         vim.schedule(function()

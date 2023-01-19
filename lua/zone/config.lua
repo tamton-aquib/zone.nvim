@@ -7,12 +7,19 @@ local default_opts = {
 
     treadmill = {
         direction = "left",  -- a lil buggy for `right`
-        tick_time = 75,      -- TODO: make it configurable inside helper.lua
+        tick_time = 30,      -- TODO: make it configurable inside helper.lua
         headache = false
     },
 
     matrix = {
-        tick_time = 1000,
+        tick_time = 40,
+        headache = false,
+    },
+
+    epilepsy = {
+        stage = "aura",
+        tick_time = 100,
+        headache = false
     },
 
     dvd = {
@@ -25,6 +32,11 @@ local default_opts = {
         ⣠⣴⣶⣾⣿⣿⣻⡟⣻⣿⢻⣿⡟⣛⢻⣿⡟⣛⣿⡿⣛⣛⢻⣿⣿⣶⣦⣄⡀⠀
         ⠉⠛⠻⠿⠿⠿⠷⣼⣿⣿⣼⣿⣧⣭⣼⣿⣧⣭⣿⣿⣬⡭⠾⠿⠿⠿⠛⠉⠀
         ]], '\n')
+    },
+
+    vanish = {
+        tick_time = 75,
+        headache = false,
     }
 }
 

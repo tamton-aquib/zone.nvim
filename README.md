@@ -3,7 +3,7 @@ A screensaver plugin for neovim. Inspiration from: [emacs-zone](https://www.emac
 Currently WIP. Has some bugs.
 
 #### Requirements:
-- Neovim version >= 0.7
+- Neovim version >= 0.8
 
 #### Installation:
 ```lua
@@ -21,18 +21,22 @@ require("zone").setup()
 require('zone').setup {
     style = "treadmill",
     after = 30,          -- Idle timeout
-    exclude_filetypes = { "TelescopePrompt" },
+    exclude_filetypes = { "TelescopePrompt", "NvimTree", "neo-tree", "dashboard" },
     -- More options to come later
 
     treadmill = {
         direction = "left",
+        headache = true,
+        tick_time = 30,     -- Lower, the faster
         -- Opts for Treadmill style
     },
     epilepsy = {
-        stage = "aura", -- "aura" or "ictal"
-        -- etc.
+        stage = "aura",     -- "aura" or "ictal"
+        tick_time = 100,
     },
     dvd = {
+        -- text = {"line1", "line2", "line3", "etc"}
+        tick_time = 100,
         -- Opts for Dvd style
     },
     -- etc

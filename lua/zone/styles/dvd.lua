@@ -17,8 +17,8 @@ local check_touch_side = function(row, col, text_h, text_w)
     if col <= 1 then direction = {"r", second} end
     if row <= 1 then direction = {first, "d"} end
     if not vim.deep_equal(old, direction) then
-        local stuff = {'Identifier', 'Keyword', 'Type', 'Function'}
-        hl = stuff[math.random(4)]
+        local colors = {'Identifier', 'Keyword', 'Type', 'Function'}
+        hl = colors[math.random(4)]
     end
 end
 
@@ -39,8 +39,8 @@ function dvd.start()
     mod.create_and_initiate(function()
         buf = vim.api.nvim_create_buf(false, true)
         win = vim.api.nvim_open_win(buf, false, {
-            relative="editor", style='minimal', height=text_h, width=text_w,
-            row=r, col=c
+            relative="editor", style='minimal', height=text_h,
+            width=text_w, row=r, col=c
         })
         vim.api.nvim_win_set_option(win, 'winhl', 'Normal:'..hl)
         vim.api.nvim_buf_set_lines(buf, 0, #lines, false, lines)

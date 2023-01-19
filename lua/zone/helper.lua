@@ -17,6 +17,7 @@ local helper_opts = {
 ---@param on_init function? The function that runs before creation of the fake buf/win
 ---@param opts table Local options for the style
 ---@return number zone buffer id
+---@return number zone window id
 H.create_and_initiate = function(on_init, opts)
     helper_opts = vim.tbl_deep_extend("force", helper_opts, opts or {})
 
@@ -33,7 +34,7 @@ H.create_and_initiate = function(on_init, opts)
 
     vim.api.nvim_create_autocmd('CursorMoved', { callback=H.zone_close, once=true })
 
-    return zone_buf
+    return zone_buf, zone_win
 end
 
 --- Setting the default view of the previous/specified buffer as virtual text.

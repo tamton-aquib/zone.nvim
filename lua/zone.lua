@@ -5,6 +5,9 @@ local default_opts = require("zone.config")
 
 zone.setup = function(opts)
     opts = vim.tbl_deep_extend("force", default_opts, opts or {})
+    for _, style in ipairs({"treadmill", "dvd", "epilepsy", "vanish"}) do
+        require("zone.styles."..style).setup(opts[style])
+    end
 
     local grp = vim.api.nvim_create_augroup('Zone', {clear=true})
     vim.api.nvim_create_autocmd({'CursorHold', 'CursorHoldI'}, {
@@ -15,7 +18,7 @@ zone.setup = function(opts)
             timer = vim.loop.new_timer()
             timer:start(opts.after * 1000, 0, vim.schedule_wrap(function()
                 if timer:is_active() then timer:stop() end
-                require("zone.styles."..(opts.style or "treadmill")).start(opts[opts.style])
+                require("zone.styles."..(opts.style or "treadmill")).start()
             end))
 
             vim.api.nvim_create_autocmd({'CursorMoved', 'CursorMovedI'}, {

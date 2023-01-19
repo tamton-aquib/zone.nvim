@@ -1,9 +1,9 @@
 
 *  Todos
-   - ( ) Add user config options.
-   - (-) Better core helper functions.
+   - (-) Add user config options.
+   - (x) Better core helper functions.
    - (-) Performance improvements.
-   - ( ) Remove logical bugs (especially with other modes)
+   - (-) Remove logical bugs (especially with other modes)
    - ( ) Add styles:
    -- (x) Running text: `treadmill`
    -- (x) Classic DVD screensaver: `dvd`
@@ -15,4 +15,4 @@
    -- ( ) Matrix effect: `matrix`
    -- (-) Random style: `random`
    - ( ) Write some docs for creating custom styles.
-   - ( ) General docs, annotations and commentsk.
+   - ( ) General docs, annotations and comments.

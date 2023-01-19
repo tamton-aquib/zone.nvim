@@ -64,8 +64,8 @@ H.on_each_tick = function(callback)
     timer:start(1000, helper_opts.tick_time or 100, vim.schedule_wrap(
         function()
             if not vim.api.nvim_buf_is_valid(zone_buf) then
-                vim.pretty_print("Buf does not exist")
                 timer:stop()
+                is_running = false
                 return
             end
 

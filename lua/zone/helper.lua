@@ -4,14 +4,7 @@ local ns = vim.api.nvim_create_namespace("zone")
 local is_running, timer, id
 local zone_win, zone_buf
 local uv = vim.loop
-local w = 6
-local helper_opts = {
-    tick_time = 100,
-    win_opts = {
-        relative="win", width=vim.o.columns-w, height=vim.o.lines - 2,
-        border="none", row=0, col=w, style='minimal'
-    }
-}
+local helper_opts
 
 --- Initiate the fake buffer and floating windows.
 ---@param on_init function? The function that runs before creation of the fake buf/win
@@ -19,6 +12,16 @@ local helper_opts = {
 ---@return number zone buffer id
 ---@return number zone window id
 H.create_and_initiate = function(on_init, opts)
+    -- TODO: remove this hack
+    local w = vim.opt.numberwidth:get()+vim.opt.foldcolumn:get()+2
+    helper_opts = {
+        tick_time = 100,
+        win_opts = {
+            relative="win", width=vim.o.columns-w,
+            height=vim.o.lines - vim.opt.cmdheight:get() - 2,
+            border="none", row=0, col=w, style='minimal'
+        }
+    }
     helper_opts = vim.tbl_deep_extend("force", helper_opts, opts or {})
 
     -- TODO: pass bufnr into on_init maybe
@@ -72,9 +75,9 @@ end
 --- Calls the callback function on regular intervals (interval: opts.tick_time)
 ---@param callback function The function that is being called on each tick.
 ---@return number Timer object
-H.on_each_tick = function(callback)
+H.on_each_tick = function(callback, timeout)
     timer = uv.new_timer()
-    timer:start(1000, helper_opts.tick_time or 100, vim.schedule_wrap(
+    timer:start(timeout or 1000, helper_opts.tick_time or 100, vim.schedule_wrap(
         function()
             if not vim.api.nvim_buf_is_valid(zone_buf) then
                 timer:stop()

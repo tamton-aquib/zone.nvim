@@ -1,9 +1,12 @@
 local default_opts = {
     style = "treadmill",
     after = 30,
+    offset = 3, -- The column offset for the fake float to open.
 
     -- TODO: Config options for other styles and exclude filetypes
-    exclude_filetypes = { 'TelescopePrompt', 'NvimTree', 'dashboard', 'lir', 'neo-tree', 'help' },
+    exclude_filetypes = {
+        'TelescopePrompt', 'NvimTree', 'dashboard', 'lir', 'neo-tree', 'help', 'help'
+    },
 
     treadmill = {
         direction = "left",  -- a lil buggy for `right`
@@ -12,7 +15,7 @@ local default_opts = {
     },
 
     matrix = {
-        tick_time = 40,
+        tick_time = 50,
         headache = false,
     },
 
@@ -36,7 +39,7 @@ local default_opts = {
     },
 
     vanish = {
-        tick_time = 75,
+        tick_time = 50,
         headache = false,
     }
 }

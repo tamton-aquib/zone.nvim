@@ -1,7 +1,7 @@
 -- TODO: cant quite figure out the algorithm for this style.
 local matrix = {}
-local fake_buf, local_opts
-local chars = vim.split("qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890!@#$%^&*(){}[]\\'\"; :,>/.", '')
+local fake_buf, fake_win, local_opts
+local chars = vim.split("qwe rty uiop asda fghjkl zxc vbnmQWE  RTYU IOPASDF GHJ KL ZXCVBNM12 3456 7890!@ #$ %^&*(){}[]\\' \"; :,>/.", '')
 local ns = vim.api.nvim_create_namespace("zone-matrix")
 
 local mod = require("zone.helper")
@@ -19,19 +19,30 @@ local generate_random_positions = function()
 
     return poss
 end
+
 local do_stuff = function(grid, id)
     if counter % 13 == 0 or not avoid_positions then
         avoid_positions = generate_random_positions()
+        counter = 1
     end
 
     table.remove(grid, #grid)
     local last = {}
-    for i=1, vim.o.columns do
-        if vim.tbl_contains(avoid_positions, i) then
-            table.insert(last, {' ', '@function'})
-        else
-            table.insert(last, {chars[math.random(#chars)], '@function'})
-        end
+    for _=1, vim.o.columns do
+        table.insert(last, {' ', 'Green'})
+
+        local desired_char = chars[math.random(#chars)]
+        -- TODO: cleanify
+        -- if counter < 3 and counter > 0 then
+            -- table.insert(last, {desired_char, 'LightestGreen'})
+        -- elseif counter < 6 and counter > 3 then
+            -- table.insert(last, {desired_char, 'LighterGreen'})
+        -- elseif counter < 9 and counter > 6 then
+            -- table.insert(last, {desired_char, 'LightGreen'})
+        -- else
+            -- table.insert(last, {desired_char, 'Green'})
+        -- end
+        table.insert(last, {desired_char, 'LightGreen'})
     end
 
     table.insert(grid, 1, last)
@@ -41,19 +52,26 @@ local do_stuff = function(grid, id)
 end
 
 matrix.start = function()
-    fake_buf = mod.create_and_initiate(nil, local_opts)
+    vim.cmd [[hi Black guifg=#000000]]
+    vim.cmd [[hi Green guifg=#008000]]
+    vim.cmd [[hi LightGreen guifg=#00ff00]]
+    vim.cmd [[hi LighterGreen guifg=#00ff00]]
+    vim.cmd [[hi LightestGreen guifg=#00ff00]]
+    fake_buf, _ = mod.create_and_initiate(nil, local_opts)
+    -- vim.api.nvim_win_set_option(fake_win, 'winhighlight', 'Normal:Black')
 
     local grid = {}
     for i = 1, vim.o.lines do
         grid[i] = {}
         for j = 1, vim.o.columns do
-            grid[i][j] = {chars[math.random(#chars)], '@function'}
+            -- grid[i][j] = {chars[math.random(#chars)], '@function'}
+            grid[i][j] = {chars[math.random(#chars)+50] or ' ', 'LightGreen'}
         end
     end
 
     local id = vim.api.nvim_buf_set_extmark(fake_buf, ns, 0, 0, { virt_lines = grid })
 
-    mod.on_each_tick(function() do_stuff(grid, id) end)
+    mod.on_each_tick(function() do_stuff(grid, id) end, 100)
 end
 
 return matrix

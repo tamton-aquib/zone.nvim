@@ -1,13 +1,11 @@
 local dvd = {}
 
 local win, buf
-local local_opts
+local local_opts = require("zone.config").dvd
 local direction = {"r", "d"}
 local hl = 'Type'
 
 local mod = require("zone.helper")
-
-dvd.setup = function(o) local_opts = o end
 
 local check_touch_side = function(row, col, text_h, text_w)
     local old = direction

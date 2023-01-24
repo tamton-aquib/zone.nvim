@@ -1,12 +1,11 @@
 -- TODO: cant quite figure out the algorithm for this style.
 local matrix = {}
-local fake_buf, fake_win, local_opts
+local fake_buf, fake_win
+local local_opts = require("zone.config").matrix
 local chars = vim.split("qwe rty uiop asda fghjkl zxc vbnmQWE  RTYU IOPASDF GHJ KL ZXCVBNM12 3456 7890!@ #$ %^&*(){}[]\\' \"; :,>/.", '')
 local ns = vim.api.nvim_create_namespace("zone-matrix")
 
 local mod = require("zone.helper")
-
-matrix.setup = function(o) local_opts = o end
 
 local avoid_positions
 local counter=1

@@ -1,11 +1,9 @@
 -- FIX: some lines shift, some more cleanify
 local vanish = {}
 local fake_buf
-local local_opts
+local local_opts = require("zone.config").vanish
 
 local mod = require("zone.helper")
-
-vanish.setup = function(o) local_opts = o end
 
 local do_stuff = function(matrix, ns, id)
     local rand_row = math.random(#matrix)

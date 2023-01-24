@@ -1,10 +1,9 @@
 -- TODO: calculate the column offset
 local treadmill = {}
-local local_opts, fake_buf
+local local_opts = require("zone.config").treadmill
+local fake_buf
 
 local mod = require("zone.helper")
-
-treadmill.setup = function(o) local_opts = o end
 
 local rotate = function(matrix, ns, id)
     for i=0, #matrix-1 do

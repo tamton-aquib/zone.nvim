@@ -12,6 +12,7 @@ local helper_opts
 ---@return number zone buffer id
 ---@return number zone window id
 H.create_and_initiate = function(on_init, opts)
+    --TODO: conflict between already running zones
     -- TODO: remove this hack
     local w = vim.opt.numberwidth:get()+vim.opt.foldcolumn:get()+2
     helper_opts = {

@@ -5,8 +5,9 @@ local default_opts = {
 
     -- TODO: Config options for other styles and exclude filetypes
     exclude_filetypes = {
-        'TelescopePrompt', 'NvimTree', 'dashboard', 'lir', 'neo-tree', 'help', 'help'
+        'TelescopePrompt', 'NvimTree', 'dashboard', 'lir', 'neo-tree', 'help',
     },
+    exclude_buftypes = {'terminal'},
 
     treadmill = {
         direction = "left",  -- a lil buggy for `right`

@@ -11,6 +11,7 @@ zone.setup = function(opts)
         group = grp,
         callback = function()
             if vim.tbl_contains(opts.exclude_filetypes, vim.bo.ft) then return end
+            if vim.tbl_contains(opts.exclude_buftypes, vim.bo.bt) then return end
 
             timer = vim.loop.new_timer()
             timer:start(opts.after * 1000, 0, vim.schedule_wrap(function()

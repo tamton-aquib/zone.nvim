@@ -1,8 +1,10 @@
 local zone = {}
 local timer
+-- local zone_loaded = false
 
 local default_opts = require("zone.config")
 
+local counter = 1
 zone.setup = function(opts)
     opts = vim.tbl_deep_extend("force", default_opts, opts or {})
 
@@ -10,6 +12,11 @@ zone.setup = function(opts)
     vim.api.nvim_create_autocmd({'CursorHold', 'CursorHoldI'}, {
         group = grp,
         callback = function()
+            if (timer and timer:is_active()) then
+                counter = counter + 1
+                vim.pretty_print("Timer already running!", counter)
+                return
+            end
             if vim.tbl_contains(opts.exclude_filetypes, vim.bo.ft) then return end
             if vim.tbl_contains(opts.exclude_buftypes, vim.bo.bt) then return end
 

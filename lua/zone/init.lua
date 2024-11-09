@@ -1,10 +1,8 @@
 local zone = {}
 local timer
--- local zone_loaded = false
 
 local default_opts = require("zone.config")
 
-local counter = 1
 zone.setup = function(opts)
     opts = vim.tbl_deep_extend("force", default_opts, opts or {})
 
@@ -12,9 +10,8 @@ zone.setup = function(opts)
     vim.api.nvim_create_autocmd({'CursorHold', 'CursorHoldI'}, {
         group = grp,
         callback = function()
-            if (timer and timer:is_active()) then
-                counter = counter + 1
-                vim.pretty_print("Timer already running!", counter)
+            if vim.g.zone then
+                vim.notify("[zone.nvim]: Zone is already running!")
                 return
             end
             if vim.tbl_contains(opts.exclude_filetypes, vim.bo.ft) then return end
@@ -23,7 +20,12 @@ zone.setup = function(opts)
             timer = vim.loop.new_timer()
             timer:start(opts.after * 1000, 0, vim.schedule_wrap(function()
                 if timer:is_active() then timer:stop() end
-                require("zone.styles."..(opts.style or "treadmill")).start()
+                if opts.style == "customcmd" then
+                    vim.cmd(opts.customcmd)
+                else
+                    vim.g.zone = true
+                    require("zone.styles."..(opts.style or "treadmill")).start()
+                end
             end))
 
             vim.api.nvim_create_autocmd({'CursorMoved', 'CursorMovedI'}, {
@@ -31,8 +33,9 @@ zone.setup = function(opts)
                 callback = function()
                     if timer:is_active() then timer:stop() end
                     if not timer:is_closing() then timer:close() end
+                    vim.g.zone = false
                 end,
-                once=true
+                once = true
             })
         end,
     })

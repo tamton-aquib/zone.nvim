@@ -1,5 +1,6 @@
 local default_opts = {
     style = "treadmill",
+    customcmd = "",
     after = 30,
     offset = 3, -- The column offset for the fake float to open.
 

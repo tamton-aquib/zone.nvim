@@ -14,6 +14,7 @@ local helper_opts
 H.create_and_initiate = function(on_init, opts)
     --TODO: conflict between already running zones
     -- TODO: remove this hack
+    vim.g.zone = true
     local w = vim.opt.numberwidth:get()+vim.opt.foldcolumn:get()+2
     helper_opts = {
         tick_time = 100,
@@ -59,9 +60,9 @@ H.set_buf_view = function(og_buf)
         local line = local_content[i+1]
 
         for j=0, line:len() do
-            local nice = vim.treesitter.get_captures_at_pos(og_buf, i+start_line, j-1)
-            nice = vim.tbl_filter(function(h) return h.capture ~= "spell" end, nice)
-            local hl = #nice > 0 and nice[#nice].capture or 'none'
+            local cap = vim.treesitter.get_captures_at_pos(og_buf, i+start_line, j-1)
+            cap = vim.tbl_filter(function(h) return h.capture ~= "spell" end, cap)
+            local hl = #cap > 0 and cap[#cap].capture or 'none'
             table.insert(newt, {line:sub(j, j+(helper_opts.headache and 1 or 0)), "@"..hl})
         end
 
@@ -111,6 +112,7 @@ H.zone_close = function()
 
             if type(H.on_exit) == "function" then H.on_exit() end
             is_running = false
+            vim.g.zone = false
         end)
     end
 end

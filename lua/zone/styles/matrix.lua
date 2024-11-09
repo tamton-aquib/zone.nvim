@@ -3,27 +3,13 @@ local matrix = {
   columns_row = {},
   columns_active = {},
 }
-local fake_buf, fake_win
+local fake_buf
 local local_opts = require("zone.config").matrix
-local chars = vim.split(
-  "qwe rty uiop asda fghjkl zxc vbnmQWE  RTYU IOPASDF GHJ KL ZXCVBNM12 3456 7890!@ #$ %^&*(){}[]\\' \"; :,>/.", '')
+local chars = "Q W E R T Y U I O P A S D F G H J K L Z X C V B N M ｡ ｢ ｣ ､ ･ ｦ ｧ ｨ ｩ ｪ ｫ ｬ ｭ ｮ ｯ ｰ ｱ ｲ ｳ ｴ ｵ ｶ ｷ ｸ ｹ ｺ ｻ ｼ ｽ ｾ ｿ ﾀ ﾁ ﾂ ﾃ ﾄ ﾅ ﾆ ﾇ ﾈ ﾉ ﾊ ﾋ ﾌ ﾍ ﾎ ﾏ ﾐ ﾑ ﾒ ﾓ ﾔ ﾕ ﾖ ﾗ ﾘ ﾙ ﾚ ﾛ ﾜ ﾝ ﾞ ﾟ"
+
 local ns = vim.api.nvim_create_namespace("zone-matrix")
 
 local mod = require("zone.helper")
-
-local avoid_positions
-local counter = 1
-local generate_random_positions = function()
-  local poss = {}
-  for _ = 1, math.floor((vim.o.columns * 3) / 5) do
-    local item = math.random(vim.o.columns)
-    table.insert(poss, item)
-  end
-
-  return poss
-end
-
-local utf8 = require("utf8")
 
 local function iter_over_even(t)
   local i = 0
@@ -34,12 +20,26 @@ local function iter_over_even(t)
   end
 end
 
+local function split(inp, sep)
+  if sep == nil then
+    sep = "%s"
+  end
+  local t = {}
+  for str in string.gmatch(inp, "([^"..sep.."]+)") do
+    table.insert(t, str)
+  end
+  return t
+end
+
+
 local function gen_random_char(bool)
   local char = ' '
   if(bool == 0) then return char end
-  local code = math.random(154)
+  --[[local code = math.random(154)
   if(code < 28) then char = string.char(code + 64)
-  else char = utf8.char((code - 27) % 64 + 0xFF61) end
+  else char = utf8.char((code - 27) % 64 + 0xFF61) end]]--
+  local i = math.random(#matrix.t)
+  char = matrix.t[i]
   return char
 end
 
@@ -89,6 +89,7 @@ matrix.start = function()
       matrix.columns_active[j] = 0
     end
   end
+  matrix.t = split(chars, ' ')
 
   local id = vim.api.nvim_buf_set_extmark(fake_buf, ns, 0, 0, { virt_lines = grid })
 
